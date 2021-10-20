@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 import numpy as np
@@ -33,11 +33,31 @@ def PIDController(
         e_y (:double:) current tracking error (automatically becomes prev_e_y at next iteration).
         e_int_y (:double:) current integral error (automatically becomes prev_int_y at next iteration).
     """
+        
+    # Tracking error
+    e_y = y_ref - y_hat
+
+    # integral of the error
+    e_int_y = prev_int_y + (e_y * delta_t)
+
+    # anti-windup - preventing the integral error from growing too much
+    e_int_y = max(min(e_int_y,2),-2)
+
+    # derivative of the error
+    e_y_der = (e_y - prev_e_y)/delta_t
+
+    # controller coefficients 0.5, 0.01, 2
+    Kp = 4.0
+    Ki = 0.0
+    Kd = 3.0
+    # For good looking results in notebook use kp = 0.2, ki = 0 and kd = 10
+    # For good looking results in simulation use kp = 4.0, ki = 0.01 and kd = 91
+    # For good looking results in simulation use kp = 4.0, ki = 0.0 and kd = 1.5
+
+    # PID controller for omega
+    omega = Kp*e_y + Ki*e_int_y + Kd*e_y_der
     
-    # TODO: these are random values, you have to implement your own PID controller in here
-    omega = np.random.uniform(-8.0, 8.0)
-    e_y = np.random.random()
-    e_int_y = np.random.random()
+    # print(f"\n\nDelta time : {delta_t} \nE_y : {e_y} \nE int : {e_int_y} \nPrev e : {prev_e_y} \nU : {np.rad2deg(omega)} \nY_hat hat: {y_hat} \n")
     
     return [v_0, omega], e_y, e_int_y
 
