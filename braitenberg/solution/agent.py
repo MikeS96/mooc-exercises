@@ -26,8 +26,8 @@ from preprocessing import preprocess
 # TODO edit this Config class ! Play with different gain and const values
 @dataclass
 class BraitenbergAgentConfig:
-    gain: float = 0.4  # 0.5
-    const: float = 0.35 # 0.3
+    gain: float = 0.5 
+    const: float = 0.35
 
 
 class BraitenbergAgent:
@@ -44,12 +44,10 @@ class BraitenbergAgent:
     def init(self, context: Context):
         context.info("init()")
         self.rgb = None
-        self.l_max = 100000 # -math.inf
-        self.r_max = 100000  # -math.inf
-        self.l_min = -100000 # math.inf
-        self.r_min = -100000 # math.inf
-        self.max_val = 0
-        self.min_val = -100000
+        self.l_max = 50000 # -math.inf
+        self.r_max = 50000  # -math.inf
+        self.l_min = -50000 # math.inf
+        self.r_min = -50000 # math.inf
         self.left = None
         self.right = None
 
@@ -82,7 +80,6 @@ class BraitenbergAgent:
         # now we just compute the activation of our sensors
         l = float(np.sum(P * self.left))
         r = float(np.sum(P * self.right))
-        print('l sum value {} r sum value {}'.format(l, r))
 
         # These are big numbers -- we want to normalize them.
         # We normalize them using the history
@@ -92,29 +89,25 @@ class BraitenbergAgent:
         # self.r_max = max(r, self.r_max)
         # self.l_min = min(l, self.l_min)
         # self.r_min = min(r, self.r_min)
-        self.max_val = max(l, self.max_val)
-        self.max_val = max(r, self.max_val)
-        self.min_val = min(l, self.min_val)
-        self.min_val = min(r, self.min_val)
-        
-        if np.abs(self.max_val) > np.abs(self.min_val):
-            self.min_val = -self.max_val
-        if np.abs(self.max_val) < np.abs(self.min_val):
-            self.max_val = -self.min_val
 
         # now rescale from 0 to 1
-        # ls = rescale(l, self.l_min, self.l_max)
-        # rs = rescale(r, self.r_min, self.r_max)
-        ls = rescale(l, self.min_val, self.max_val)
-        rs = rescale(r, self.min_val, self.max_val)
-        print('l rescale {} r rescale {}'.format(ls, rs))
-        print('The max val is {} and the min {}.'.format(self.max_val, self.min_val))
+        ls = rescale(l, self.l_min, self.l_max)
+        rs = rescale(r, self.r_min, self.r_max)
+        #If the scaling values are below 0 or above 1
+        if ls > 1:
+            ls = 1
+        elif ls < 0:
+            ls = 0
+            
+        if rs > 1:
+            rs = 1
+        elif rs < 0:
+            rs = 0 
 
         gain = self.config.gain
         const = self.config.const
         pwm_left = const + ls * gain
         pwm_right = const + rs * gain
-        print('pwm left value {} pwm righr sum value {}'.format(pwm_left, pwm_right))
 
         return pwm_left, pwm_right
 

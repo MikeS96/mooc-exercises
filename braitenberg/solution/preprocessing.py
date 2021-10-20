@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 ### Real-world deployment ###
-# lower_hsv = np.array([0, 80, 0]) 
+# lower_hsv = np.array([0, 60, 0]) 
 # upper_hsv = np.array([37, 255, 255])
 
 ### Simulation ###
