@@ -169,6 +169,10 @@ class LaneServoingNode(DTROS):
             image_msg (:obj:`sensor_msgs.msg.CompressedImage`): The receive image message
 
         """
+        ### Simulation ###
+        # self.steer_max = 7500
+        ### Real ###
+        self.steer_max = 3500
         image = compressed_imgmsg_to_rgb(image_msg)
         # Resize the image to the desired dimensionsS
         height_original, width_original = image.shape[0:2]
