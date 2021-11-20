@@ -97,7 +97,9 @@ class ObjectDetectionNode(DTROS):
             return
         
         image = cv2.resize(image, (416,416))
+        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # https://stackoverflow.com/c/duckietown/questions/2405
         bboxes, classes, scores = self.model_wrapper.predict(image)
+        # image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
         detection = self.det2bool(bboxes, classes, scores)
 

@@ -44,7 +44,7 @@ def save_npz(img, boxes, classes):
 
 # some setup
 seed(123)
-MAX_STEPS = 1000
+MAX_STEPS = 2000 # Changed from 1000
 nb_of_steps = 0
 
 # we interate over several maps to get more diverse data
@@ -69,7 +69,8 @@ while True:
     env = launch_env(possible_maps[env_id])
     policy = PurePursuitPolicy(env)
     obs = env.reset()
-
+    # Once the environment is selected, choose next one!
+    env_id += 1
     inner_steps = 0
     if nb_of_steps >= MAX_STEPS:
         break
