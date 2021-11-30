@@ -11,14 +11,14 @@ lane_filter_histogram_configuration:
   delta_d: 0.01
   delta_phi: 0.05
   d_max: 0.17
-  d_min: -0.17
+  d_min: -0.15
   phi_min: -1.0
   phi_max: 1.0
   linewidth_white: 0.05
   linewidth_yellow: 0.025
   lanewidth: 0.23
   sigma_d_mask: 1.0
-  sigma_phi_mask: 1.0
+  sigma_phi_mask: 2.0
   encoder_resolution: 135
   wheel_radius: 0.0318
   wheel_baseline: 0.1
