@@ -83,7 +83,7 @@ def filter_by_bboxes(bbox):
     x_center = x1 + (w / 2)
     y_center = y1 + (h / 2)
     if x_center >= (416 / 6) and x_center <= (416 * 5 / 6):
-        if area / total_area > 0.03:
+        if area / total_area > 0.015:
             detection = True
     else:
         detection = False

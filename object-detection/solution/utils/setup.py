@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 DATASET_DIR="/jupyter_ws/solution/duckietown_dataset"
@@ -10,7 +10,7 @@ IMAGE_SIZE = 416
 SPLIT_PERCENTAGE = 0.8
 
 
-# In[1]:
+# In[6]:
 
 
 from PIL import Image
@@ -34,7 +34,7 @@ mapping = {
 }
 
 
-# In[5]:
+# In[10]:
 
 
 def segmented_image_one_class(segmented_img, class_name):
@@ -42,7 +42,7 @@ def segmented_image_one_class(segmented_img, class_name):
     return mask
 
 
-# In[7]:
+# In[12]:
 
 
 def find_all_bboxes(mask):
@@ -65,7 +65,7 @@ def find_all_bboxes(mask):
     return boxes
 
 
-# In[10]:
+# In[15]:
 
 
 def find_all_boxes_and_classes(segmented_img):
