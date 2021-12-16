@@ -213,8 +213,8 @@ def histogram_update(belief, segments, road_spec, grid_spec):
         if np.sum(p_belief) != 0:
             belief = p_belief / np.sum(p_belief)
         # Liam's suggestion
-        else:
-            belief = measurement_likelihood
+        # else:
+        #     belief = measurement_likelihood
 
     return (measurement_likelihood, belief)
 
